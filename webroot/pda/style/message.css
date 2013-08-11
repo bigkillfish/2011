@@ -1,0 +1,72 @@
+/*--------------- sms_list ------------------*/
+.clear{clear:both; overflow:hidden;}
+p.ui-li-aside{margin:0.8em 0;width:auto;color:#666666;}
+#sms-list-content .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li{padding:0 75px 0 0px;}
+#sms-list-content .ui-li .ui-btn-inner a.ui-link-inherit{padding-right:40px;padding-left:60px;}
+#sms-list-content .ui-li-thumb{top:0.5em;left:0.5em;width:40px;height:40px;}
+#sms-list-content li{padding-bottom:3px;}
+#sms-list-content li.foripad{padding:8px 0px 10px 0px;}
+
+/*常态下描述文字的灰色*/
+p.ui-li-desc{color:#666666;}
+
+/*激活状态下描述文字修正为白色*/
+.ui-btn-active p.ui-li-desc, .ui-btn-active p.ui-li-aside{color:#FFFFFF;}
+
+/*短信列表页面的写短信图*/
+.ui-icon-myapp-write-sms{background-image:url('./images/sms.png');}
+.no_msg{height:200px;line-height:200px;text-align:center;}
+
+.line1{padding:10px;}
+.line2{background-color:#EFEFEF;padding:10px;}
+.mycust-list{height:auto;margin-bottom:10px;
+	-moz-border-radius: 		.6em;
+	-webkit-border-radius: 	.6em;
+	-radius: 			.6em;
+}
+.mycust-dioavatar{width:40px;height:40px;float:left;position:relative;}
+.mycust-dioavatar img{width:40px;height:40px;}
+.mycust-diobox{padding-left:10px;height:auto;}
+.mycust-list-user{text-align:left;font-size:14px;margin-left:40px;display:block;padding-bottom:3px;border-bottom: 1px solid #C6C6C6;text-shadow: 0 1px 0 #fff;color:#000000;}
+.mycust-list-time{float:right;font-size:12px;color:#666666;}
+.mycust-list-msg{font-size:14px;margin-left:40px;padding:10px 0px;}
+.mycust-online{height:21px;width:14px;position:absolute;bottom:0px;right:0px;background:url('./images/iphone.png') no-repeat center center;}
+.mycust-list-from{font-size:12px;color:#666666;}
+
+/*新短信*/
+.ui-listview .udf-new-msg span.ui-icon{
+	background:url('./images/msg_unread.png') no-repeat center center;
+	-moz-border-radius:0px;
+	-webkit-border-radius: 0px;
+	width:24px;
+}
+
+.mycust-loading{height:50px;background:url('./images/ajax-loader.gif') no-repeat center center;padding:10px 0px;display:none;}
+#inp_area{padding:0px 10px 0px 0px;}
+#inp_msg{width:100%;}
+#inp_area .ui-block-a, #inp_area .ui-block-b{width:40%}
+
+
+
+/*联系人页面*/
+.mycust-contactsearch{margin:0px auto;padding:0px;border-bottom:none;}
+.mycust-contactsearch-block{display:block;padding:10px 0px 0px 0px;height:auto;line-height:32px;}
+.mycust-contactsearch-block .mycust-cb-item{float:left;display:block;width:70px;}
+.mycust-contactsearch-block .mycust-user-list{float:left;height:auto;width:100%;margin-top:5px;border-top:1px solid #CCC;}
+.mycust-contactsearch-block .mycust-user-list .mycust-select-user{
+	margin:0px;padding:0px 5px;float:left;margin-right:5px;margin-top:5px;
+	background-color: #B2B2B2;
+	-moz-border-radius:10px;-webkit-border-radius: 10px;
+}
+.mycust-contactsearch-block .ui-input-search{width:74%;margin-left:7px;}
+
+#contacts-list, div#inp_area_muti{margin-left:auto;margin-right:auto;}
+#inp_area_muti .ui-block-a, #inp_area_muti .ui-block-b{width:40%}
+#mycust-btn-add{height:24px;line-height:24px;-moz-border-radius:1em;-webkit-border-radius:1em;position:relative;padding-left:25px;display:block;float:left;padding-right:5px;font-size:12px;margin-top:3px;}
+#mycust-btn-add span{height:18px;width:18px;display:block;position:absolute;margin-top:-9px;top:50%;left:5px;}
+#mycust-btn-add a{color:#FFF;text-decoration:none;}
+.dept_name{font-size:14px;color:#666666;}
+#contacts-list .ui-btn-active .dept_name{color:#FFF;}
+
+#inp_area_text{display:block;float:left;margin-bottom:10px;}
+#muti_msg_result{display:block;float:left;margin-bottom:10px;width:16px;height:16px;background:url('./images/ajax-loader3.gif') no-repeat center center;}
