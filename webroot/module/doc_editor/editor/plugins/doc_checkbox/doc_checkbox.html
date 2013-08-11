@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<!--
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * Text field dialog window.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta content="noindex, nofollow" name="robots" />
+	<script src="../../dialog/common/fck_dialog_common.js" type="text/javascript"></script>
+  <script src="/inc/js/utility.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+var dialog	= window.parent ;//应该是对话框外壳所对应的窗口 by dq 090520
+var oEditor = dialog.InnerDialogLoaded() ;//获得最外层界面所对应的window，该函数在对话框外壳程序中(fckdialog.html)定义 by dq 090520
+
+// Gets the document DOM
+var oDOM = oEditor.FCK.EditorDocument ;
+var oActiveEl = dialog.Selection.GetSelectedElement() ;
+
+window.onload = function(){
+	if ( oActiveEl && oActiveEl.tagName == 'INPUT')
+	{
+		GetE('ITEM_NAME').value	= oActiveEl.title ;
+		GetE('ITEM_VALUE').selectedIndex	= oActiveEl.getAttribute('checked') ;
+	}
+	else
+		oActiveEl = null ;
+
+	dialog.SetOkButton( true ) ;//该函数在fckdialog.html 683行定义 by dq 090520
+	dialog.SetAutoSize( true ) ;//该函数在fckdialog.html 213行定义 by dq 090520
+	SelectField( 'ITEM_NAME' ) ;//在编辑区域设置刚创建的控件为选中状态，该函数在fck_dialog_common.js 第100行定义 by dq 090520
+}
+
+function Ok()
+{
+  	//为“撤销”操作做准备，记录当前编辑区域的状态（猜的） by dq 090520
+	oEditor.FCKUndo.SaveUndoStep() ;
+
+  	if(ITEM_NAME.value=="")
+  	{
+  	   alert("控件名称不能为空");
+  	   return;
+  	}
+		
+	//oActiveEl = CreateNamedElement( oEditor, oActiveEl, 'INPUT', {name:"ddd", title: GetE('ITEM_NAME').value.replace("\"","&quot;"), type: 'checkbox', value:'' } ) ;
+	if(oActiveEl == null){
+	  _get("/general/document/index.php/setting/type/add_item_id","tid="+ oEditor.parent.tid,function(req){item_id = req.responseText;},false);
+	}
+	
+	oActiveEl = CreateNamedElement( oEditor, oActiveEl, 'INPUT', {name:"DATA_"+item_id, title: GetE('ITEM_NAME').value.replace("\"","&quot;"), type: 'checkbox', value:'' } ) ;
+
+  	oActiveEl.removeAttribute("value");
+  	
+  	if (GetE('ITEM_VALUE').value == "") {
+		  oActiveEl.checked = false ;
+  	} else {
+		  SetAttribute( oActiveEl, 'checked', GetE('ITEM_VALUE').value) ;
+  	}
+  	
+  	return true;
+}
+
+</script>
+</head>
+<body style="overflow: hidden">
+
+<table width="100%" style="height: 100%">
+		<tr>
+			<td align="center">
+				<table cellspacing="3" cellpadding="0" border="0">
+          <tr>
+            <td nowrap>控件名称：
+            </td>
+            <td nowrap>
+               <Input id="ITEM_NAME" type="text" size="20">
+            </td>
+          </tr>
+          <tr>
+            <td nowrap>默认值：
+            </td>
+            <td nowrap>
+              <select id="ITEM_VALUE">
+                <option value="">不选中
+                <option value="checked">选中
+              </select>
+            </td>
+          </tr>
+				</table>
+			</td>
+		</tr>
+</table>
+</body>
+</html>
+
+

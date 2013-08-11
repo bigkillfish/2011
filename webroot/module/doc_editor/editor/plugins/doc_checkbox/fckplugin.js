@@ -1,0 +1,1 @@
+FCKCommands.RegisterCommand( 'doc_checkbox', new FCKDialogCommand( 'doc_checkbox', "∏¥—°øÚ Ù–‘", FCKPlugins.Items['doc_checkbox'].Path + 'doc_checkbox.html', 380, 210 ) ) ;

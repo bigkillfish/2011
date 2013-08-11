@@ -1,0 +1,150 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta content="noindex, nofollow" name="robots" />
+	<script src="../../dialog/common/fck_dialog_common.js" type="text/javascript"></script>
+  <script src="/inc/js/utility.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+var dialog	= window.parent ;
+var oEditor = dialog.InnerDialogLoaded() ;
+
+// Gets the document DOM
+var oDOM = oEditor.FCK.EditorDocument ;
+
+var oActiveEl = dialog.Selection.GetSelectedElement() ;
+var item_id = "";
+window.onload = function()
+{
+	// First of all, translate the dialog box texts
+	oEditor.FCKLanguageManager.TranslatePage(document) ;
+
+	if ( oActiveEl && oActiveEl.tagName == 'INPUT' && oActiveEl.type == 'text')
+	{
+		GetE('txtName').value	= oActiveEl.title ;
+		GetE('txtValue').value	= oActiveEl.value ;
+		GetE('txtMax').value	= GetAttribute( oActiveEl, 'maxLength' ) ;
+		item_id = oActiveEl.name.substr(5);
+		
+		var txtFontSizeFull = oActiveEl.getAttribute('style').fontSize;
+		GetE('txtFontSize').value = txtFontSizeFull.substr(0, txtFontSizeFull.length - 2);//这里的substr是为了去掉末尾的'px' by dq 090522
+		
+		var txtSizeFull = oActiveEl.getAttribute('style').width;
+		GetE('txtSize').value = txtSizeFull.substr(0, txtSizeFull.length - 2);//这里的substr是为了去掉末尾的'px' by dq 090522
+
+		var txtHeight = oActiveEl.getAttribute('style').height;
+		GetE('txtHeight').value = txtHeight.substr(0, txtHeight.length - 2);
+
+		GetE('txtAlign').value = oActiveEl.getAttribute('style').textAlign;
+
+	}
+	else//在编辑区域内新建一个控件时，走这个分支 by dq 090520
+		oActiveEl = null ;
+
+	dialog.SetOkButton( true ) ;
+	dialog.SetAutoSize( true ) ;
+	SelectField( 'txtName' ) ;
+}
+function nameon(){//标题上屏功能~
+    GetE('txtName').value = GetE('txtType')[GetE('txtType').selectedIndex].text;
+}
+function Ok()
+{
+
+	oEditor.FCKUndo.SaveUndoStep() ;
+	if(oActiveEl == null){
+        if(GetE('txtType').value!= "")
+            var vname = GetE('txtType').value;
+        else
+        {
+            _get("/general/document/index.php/setting/type/add_item_id","tid="+ oEditor.parent.tid,function(req){item_id = req.responseText;},false);
+            var vname = "DATA_"+item_id;
+        }
+    }
+
+	oActiveEl = CreateNamedElement( oEditor, oActiveEl, 'INPUT', {name:vname, title: GetE('txtName').value, type: 'text' } ) ;
+
+	SetAttribute( oActiveEl, 'value'	, GetE('txtValue').value ) ;
+	SetAttribute( oActiveEl, 'maxlength', GetE('txtMax').value ) ;
+	SetAttribute( oActiveEl, 'align', GetE('txtAlign').value ) ;
+	if(GetE('txtFontSize').value!="")
+		oActiveEl.style.fontSize=GetE('txtFontSize').value + 'px';//加上px可能在firefox也会正确显示 by dq 090522
+	if(GetE('txtAlign').value!="")
+	   	oActiveEl.style.textAlign=GetE('txtAlign').value;
+	if(GetE('txtSize').value!="")
+	   	oActiveEl.style.width=GetE('txtSize').value + 'px';
+	if(GetE('txtHeight').value!="")
+	   	oActiveEl.style.height=GetE('txtHeight').value + 'px';
+	return true ;
+}
+
+	</script>
+</head>
+<body style="overflow: hidden">
+
+<table width="100%" style="height: 100%">
+		<tr>
+			<td align="center">
+				<table cellspacing="3" cellpadding="0" border="0">
+					<tr>
+						<td>
+							输入框名称<br />
+							<input id="txtName" type="text" size="10" />
+						</td>
+						<td width="20%">&nbsp;</td>
+						<td>
+							字段类型<br />
+							<select id="txtType">
+								<option value="" checked="checked" onclick="nameon();">自定义</option>
+								<option value="title" onclick="nameon();">公文标题</option>
+								<option value="sno" onclick="nameon();">文号</option>
+								<option value="from_unit" onclick="nameon();">发文单位</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span fcklang="DlgTextSize">字体大小</span><br />
+							<input id="txtFontSize" type="text" size="10" />
+						</td>
+						<td width="20%">&nbsp;</td>
+						<td>
+							<span fcklang="DlgTextMaxChars">最多字符数</span><br />
+							<input id="txtMax" type="text" size="10" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							输入框宽度<br />
+							<input id="txtSize" type="text" size="10" />
+						</td>
+							<td width="20%">&nbsp;</td>
+						<td>
+							输入框高度<br />
+							<input id="txtHeight" type="text" size="10">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span fcklang="DlgImgAlign">对齐方式</span><br />
+							<select id="txtAlign">
+								<option value="left" fcklang="DlgTableAlignLeft">Left</option>
+								<option value="center" fcklang="DlgTableAlignCenter">Center</option>
+								<option value="right" fcklang="DlgTableAlignRight">Right</option>
+							</select>
+						</td>
+						<td width="20%">&nbsp;</td>
+						<td>
+							<span fcklang="DlgTextValue">默认值</span><br />
+							<input id="txtValue" type="text" style="width:100%" />
+						</td>
+					</tr>				
+				</table>
+			</td>
+		</tr>
+</table>
+</body>
+</html>
+
+
